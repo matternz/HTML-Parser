@@ -1,1 +1,2 @@
 12/08/18 - Set up project in gitlab. created 3 java files
+8pm - added read file method. completed some of the patterns for html parser
