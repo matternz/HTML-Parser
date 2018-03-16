@@ -3,6 +3,8 @@ import java.util.regex.Pattern;
 
 public class HTML_Parser {
 	
+	private Scanner scan;
+	
 	//https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
 	//https://docs.oracle.com/javase/7/docs/api/java/util/regex/Matcher.html
 	static Pattern PARAGRAPH = Pattern.compile("\n");
@@ -19,11 +21,19 @@ public class HTML_Parser {
 	
 	
 	public HTML_Parser(Scanner scan){
-		
+		this.scan = scan;
 	}
 	
 	public void parseScanner(Scanner scan){
-		
+		while(scan.hasNext()){
+			if(scan.hasNext(PARAGRAPH)){
+				System.out.println("new line");
+				scan.next();
+			}
+			else{
+				System.out.print(scan.next());
+			}
+		}
 	}
 	
 	public static void main(String [] args){

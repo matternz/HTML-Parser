@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javax.swing.JFileChooser;
+
 public class Parser {
 
 	/**
@@ -9,10 +11,10 @@ public class Parser {
 	 * @param file
 	 */
 	public static Scanner readFile(File file){
-		Scanner scan = null;
 		try {
-			scan = new Scanner(file);
-			scan.close();
+			Scanner scan = new Scanner(file);
+			//https://stackoverflow.com/questions/2188265/what-character-can-be-used-to-parse-for-paragraphs-with-java
+			scan.useDelimiter("");
 			return scan;
 		} catch (FileNotFoundException e) {
 			System.out.println("file not found");
@@ -25,14 +27,22 @@ public class Parser {
 			return;
 		}
 		
-		HTML_Parser htmlParser;
+		HTML_Parser htmlParser = new HTML_Parser(scan);
+		htmlParser.parseScanner(scan);
 		
 	}
 	
-	
+	public static void selectFile(){
+		JFileChooser chooser = new JFileChooser(".");// System.getProperty("user.dir"));
+		int res = chooser.showOpenDialog(null);
+		if (res != JFileChooser.APPROVE_OPTION) {
+		
+		}
+		parseFile(readFile(chooser.getSelectedFile()));
+	}
 	
 	public static void main(String [] args) {
-
+		selectFile();
 	}
 
 }
