@@ -1,5 +1,9 @@
 12/08/18 - Set up project in gitlab. created 3 java files
+
 8pm - added read file method. completed some of the patterns for html parser
+
 
 16/03/2018
 3-pm tested way to detect new lines added delimter so that scanner will not ignore spaces / new lines
+5pm
+fixed paragraph detection. need to tidy up code

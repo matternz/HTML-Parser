@@ -27,7 +27,7 @@ public class Parser {
 			return;
 		}
 		
-		HTML_Parser htmlParser = new HTML_Parser(scan);
+		HTML_Parser htmlParser = new HTML_Parser();
 		htmlParser.parseScanner(scan);
 		
 	}
