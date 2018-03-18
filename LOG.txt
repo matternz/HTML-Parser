@@ -7,3 +7,7 @@
 3-pm tested way to detect new lines added delimter so that scanner will not ignore spaces / new lines
 5pm
 fixed paragraph detection. need to tidy up code
+18/03/2018
+9:00pm-11:00pm
+created node classes for first part
+started creating testing

@@ -1,7 +1,10 @@
+package Parser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
+import Nodes.Node;
 
 public class HTML_Parser {
 
@@ -46,7 +49,9 @@ public class HTML_Parser {
 	public String parseParagraphs(Scanner scan) {
 		return null;
 	}
-
+	
+	
+	
 	public static void main(String[] args) {
 
 	}
