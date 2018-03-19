@@ -12,20 +12,28 @@ import Nodes.*;
 
 public class NodeTests {
 
+	String PARAGRAPH_1 = "src/Tests/Paragraph.txt";
+	String ITALIC_1 = "src/Tests/Italic.txt";
+
 	public NodeTests() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Node createParagraph() {
+	public Node createParagraph(String filePath) {
 		// https://stackoverflow.com/questions/326390/how-do-i-create-a-java-string-from-the-contents-of-a-file
 
-		Node paragraph = new Paragraph_Node(readLineByLineJava8("src/Tests/Paragraph.txt"));
+		Node paragraph = new Paragraph_Node(readLineByLineJava8(filePath));
 		return paragraph;
+	}
+
+	public Node createItalic(String filePath) {
+		Node italic = new Italic_Node(readLineByLineJava8(filePath));
+		return italic;
 	}
 
 	/**
 	 * https://howtodoinjava.com/core-java/io/java-read-file-to-string-examples/
-	 * 
+	 *
 	 * @param filePath
 	 * @return
 	 */
@@ -37,11 +45,16 @@ public class NodeTests {
 			e.printStackTrace();
 		}
 		return contentBuilder.toString();
-		
+
 	}
 
 	@Test
 	public void paragraph_test_1() {
-		Node paragraph = createParagraph();
+		Node paragraph = createParagraph(PARAGRAPH_1);
+	}
+
+	@Test
+	public void italic_test_1() {
+		Node italic = createItalic(ITALIC_1);
 	}
 }

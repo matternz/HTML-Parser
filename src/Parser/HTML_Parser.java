@@ -1,9 +1,11 @@
 package Parser;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import Nodes.Italic_Node;
 import Nodes.Node;
 
 public class HTML_Parser {
@@ -17,11 +19,11 @@ public class HTML_Parser {
 	// static Pattern PARAGRAPH = Pattern.compile("\n");
 	private static final Pattern PARAGRAPH = Pattern.compile("\\s*^\\s*$\\s*", Pattern.MULTILINE);
 	private static final Pattern ITALIC = Pattern.compile("\\*");
-	private static final Pattern BOLD = Pattern.compile("\\*\\*");
-	private static final Pattern HEADING_1 = Pattern.compile("##");
+	// private static final Pattern BOLD = Pattern.compile("**");
+	private static final Pattern HEADING_1 = Pattern.compile("#");
 	private static final Pattern HEADING_2 = Pattern.compile("##");
 	private static final Pattern NUMBERED_LIST = Pattern.compile("[0-9]");
-	private static final Pattern BULLETED_LIST = Pattern.compile("\\* ");
+	// private static final Pattern BULLETED_LIST = Pattern.compile("* ");
 	private static final Pattern SEPERATOR = Pattern.compile("^---");
 	private static final Pattern BLOCK_QUOTE = Pattern.compile("> $[A-Za-z][A-Za-z0-9]");
 
@@ -30,6 +32,26 @@ public class HTML_Parser {
 	}
 
 	public void parseScanner(Scanner scan) {
+		String token = scan.next();
+
+		switch (token) {
+		case ("*"):
+			parseItalics(scan);
+		case ("**"):
+			//parseBold
+		case ("#"):
+			//parseHeading1
+		case ("##"):
+			//parseHeading2
+		case ("-"):
+			//parseSeperator
+		case (">"):
+		default:
+			break;
+		}
+	}
+
+	public String parseParagraphs(Scanner scan) {
 		// https://codereview.stackexchange.com/questions/81852/empty-line-delimiter-single-line-output
 		int i = 0;
 		while (scan.hasNext()) {
@@ -43,17 +65,26 @@ public class HTML_Parser {
 			}
 			System.out.print(scan.next());
 		}
-
-	}
-
-	public String parseParagraphs(Scanner scan) {
 		return null;
 	}
-	
-	
-	
-	public static void main(String[] args) {
 
+	/**
+	 *
+	 * @param scan
+	 * @return
+	 */
+	public String parseItalics(Scanner scan) {
+		StringBuilder text = new StringBuilder();
+		while (scan.hasNext()) {
+			if (scan.hasNext(ITALIC)) {
+				scan.next();
+			} else {
+				text.append(scan.next());
+			}
+		}
+		Node Italic = new Italic_Node(text.toString());
+		System.out.print(Italic.getHTML());
+		return Italic.toString();
 	}
 
 }
