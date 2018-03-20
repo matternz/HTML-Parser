@@ -11,3 +11,6 @@ fixed paragraph detection. need to tidy up code
 9:00pm-11:00pm
 created node classes for first part
 started creating testing
+20/03/2018
+9:00pm
+changed pattern class and tested pattern italic detection

@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Scanner;
 import java.util.stream.Stream;
 
 import org.junit.Test;
 
 import Nodes.*;
+import Parser.HTML_Parser;
 
 public class NodeTests {
 
@@ -42,6 +44,7 @@ public class NodeTests {
 
 	@Test
 	public void paragraph_test_1() {
-		Node paragraph = createParagraph();
+		//Node paragraph = createParagraph();
+		new HTML_Parser().parseScanner(new Scanner(readLineByLineJava8("src/Tests/Italic.txt")));;
 	}
 }

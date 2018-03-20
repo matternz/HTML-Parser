@@ -37,7 +37,7 @@ public class Parser {
 		JFileChooser chooser = new JFileChooser(".");// System.getProperty("user.dir"));
 		int res = chooser.showOpenDialog(null);
 		if (res != JFileChooser.APPROVE_OPTION) {
-		
+			return;
 		}
 		parseFile(readFile(chooser.getSelectedFile()));
 	}
