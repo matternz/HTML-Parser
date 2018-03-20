@@ -11,6 +11,13 @@ fixed paragraph detection. need to tidy up code
 9:00pm-11:00pm
 created node classes for first part
 started creating testing
+<<<<<<< HEAD
 20/03/2018
 9:00pm
 changed pattern class and tested pattern italic detection
+=======
+19/03/2018
+2:00pm-2:40pm
+finished Italic node parsing.
+need to modify tests to handle the same way parser handles
+>>>>>>> 596b16027779cb7bcbf966f3013e902f3e06bec6
