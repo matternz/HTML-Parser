@@ -57,9 +57,11 @@ public class HTML_Parser {
 	public void parseLine(String line) {
 		Scanner scan = new Scanner(line);
 		while (scan.hasNext()) {
-
+			StringBuilder text = new StringBuilder();
 			if (scan.hasNext(ITALIC)) {
 				System.out.println("ITALIC");
+				//loop through until you get to the next italic by calling scan.next
+				//once finished create new node and then add it to the list
 			} else if (scan.hasNext(BOLD)) {
 				System.out.println("BOLD");
 			} else if (scan.hasNext(HEADING)) {

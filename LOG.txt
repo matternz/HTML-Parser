@@ -22,3 +22,4 @@ changed pattern class and tested pattern italic detection
 12:00pm
 planning out way to loop through text and build and html web page
 added method to scan each line
+planned logic for scanning through each line
