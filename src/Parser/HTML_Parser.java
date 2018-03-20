@@ -40,8 +40,17 @@ public class HTML_Parser {
 		 * System.out.print("PARAGRAPH"); } continue; }
 		 * System.out.print(scan.next()); }
 		 */
+
+		//-------------------
+		/*
+		 * split everything into lines
+		 * loop through each line
+		 * list of lists
+		 * list of each line with each line having a list of nodes....
+		 */
+		//-------------------
 		while (scan.hasNext()) {
-			
+
 			if (scan.hasNext(ITALIC)) {
 				System.out.println("ITALIC");
 			} else if (scan.hasNext(BOLD)) {
@@ -59,7 +68,7 @@ public class HTML_Parser {
 			else{
 				System.out.println("Hello there");
 			}
-			
+
 			System.out.println(scan.next());
 		}
 

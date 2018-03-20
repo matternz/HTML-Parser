@@ -18,3 +18,6 @@ need to modify tests to handle the same way parser handles
 20/03/2018
 9:00pm
 changed pattern class and tested pattern italic detection
+21/03/2018
+12:00pm
+planning out way to loop through text and build and html web page
