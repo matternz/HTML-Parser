@@ -49,6 +49,13 @@ public class HTML_Parser {
 		 * list of each line with each line having a list of nodes....
 		 */
 		//-------------------
+		while(scan.hasNextLine()) {
+			parseLine(scan.nextLine());
+		}
+	}
+
+	public void parseLine(String line) {
+		Scanner scan = new Scanner(line);
 		while (scan.hasNext()) {
 
 			if (scan.hasNext(ITALIC)) {
@@ -71,6 +78,7 @@ public class HTML_Parser {
 
 			System.out.println(scan.next());
 		}
+		scan.close();
 
 	}
 

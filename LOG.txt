@@ -21,3 +21,4 @@ changed pattern class and tested pattern italic detection
 21/03/2018
 12:00pm
 planning out way to loop through text and build and html web page
+added method to scan each line
