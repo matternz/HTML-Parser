@@ -1,14 +1,16 @@
 12/08/18 - Set up project in gitlab. created 3 java files
-
+https://docs.oracle.com/javase/7/docs/api/java/util/regex/Matcher.html
 8pm - added read file method. completed some of the patterns for html parser
-
+https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
 
 16/03/2018
 3-pm tested way to detect new lines added delimter so that scanner will not ignore spaces / new lines
+https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
 5pm
 fixed paragraph detection. need to tidy up code
 18/03/2018
 9:00pm-11:00pm
+https://stackoverflow.com/questions/326390/how-do-i-create-a-java-string-from-the-contents-of-a-file
 created node classes for first part
 started creating testing
 19/03/2018
@@ -27,3 +29,7 @@ planned logic for scanning through each line
 fixed HTML_parser for bold
 fixed bold pattern
 wrote more tests
+https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
+9:00pm
+changed approach
+decided to have linked list / tree approach/ created new abstract class and create new methods to parse to html

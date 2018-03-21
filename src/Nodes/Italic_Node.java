@@ -1,6 +1,6 @@
 package Nodes;
 
-public class Italic_Node implements Node {
+public class Italic_Node extends AbstractNode {
 
 	StringBuilder text;
 
@@ -16,7 +16,7 @@ public class Italic_Node implements Node {
 
 	@Override
 	public String getHTML() {
-		return "<em>"+this.text.toString()+"</em>";
+		return "<em>"+super.getHTML()+"</em>";
 	}
 
 	@Override
