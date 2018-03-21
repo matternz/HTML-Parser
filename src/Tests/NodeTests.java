@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -27,7 +29,7 @@ public class NodeTests {
 
 	/**
 	 * https://howtodoinjava.com/core-java/io/java-read-file-to-string-examples/
-	 * 
+	 *
 	 * @param filePath
 	 * @return
 	 */
@@ -39,12 +41,54 @@ public class NodeTests {
 			e.printStackTrace();
 		}
 		return contentBuilder.toString();
-		
+
 	}
 
 	@Test
-	public void paragraph_test_1() {
+	public void bold_test_01() {
 		//Node paragraph = createParagraph();
-		new HTML_Parser().parseScanner(new Scanner(readLineByLineJava8("src/Tests/Italic.txt")));;
+		HTML_Parser htmlParser = new HTML_Parser();
+		htmlParser.parseScanner(new Scanner(readLineByLineJava8("src/Tests/Bold.txt")));
+		//assertEquals("bold",(htmlParser.getNodes().get(0).toString()));
+		//assertEquals("<em>bold</em>",(htmlParser.getNodes().get(0).getHTML()));
+
 	}
+
+	@Test
+	public void heading1_test_01() {
+		//Node paragraph = createParagraph();
+		HTML_Parser htmlParser = new HTML_Parser();
+		htmlParser.parseScanner(new Scanner(readLineByLineJava8("src/Tests/Heading1.txt")));
+		assertEquals("heading1",(htmlParser.getNodes().get(0).toString()));
+		assertEquals("<h2>heading1</h2>",(htmlParser.getNodes().get(0).getHTML()));
+	}
+
+	@Test
+	public void heading2_test_01() {
+		//Node paragraph = createParagraph();
+		HTML_Parser htmlParser = new HTML_Parser();
+		htmlParser.parseScanner(new Scanner(readLineByLineJava8("src/Tests/Heading2.txt")));
+		assertEquals("heading2",(htmlParser.getNodes().get(0).toString()));
+		assertEquals("<h3>heading2</h3>",(htmlParser.getNodes().get(0).getHTML()));
+	}
+
+	@Test
+	public void italic_test_01() {
+		//Node paragraph = createParagraph();
+		HTML_Parser htmlParser = new HTML_Parser();
+		htmlParser.parseScanner(new Scanner(readLineByLineJava8("src/Tests/Italic.txt")));
+		assertEquals("italic",(htmlParser.getNodes().get(0).toString()));
+		assertEquals("<em>italic</em>",(htmlParser.getNodes().get(0).getHTML()));
+	}
+
+	@Test
+	public void paragraph_test_01() {
+		//Node paragraph = createParagraph();
+		HTML_Parser htmlParser = new HTML_Parser();
+		htmlParser.parseScanner(new Scanner(readLineByLineJava8("src/Tests/Paragraph.txt")));
+		htmlParser.getNodes().get(0).toString();
+	}
+
+
+
 }

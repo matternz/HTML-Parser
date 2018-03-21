@@ -23,3 +23,7 @@ changed pattern class and tested pattern italic detection
 planning out way to loop through text and build and html web page
 added method to scan each line
 planned logic for scanning through each line
+3:00pm
+fixed HTML_parser for bold
+fixed bold pattern
+wrote more tests
