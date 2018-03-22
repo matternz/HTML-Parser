@@ -23,7 +23,7 @@ public class Parser {
 		return null;
 	}
 	
-	public static void parseFile(Scanner scan){
+	public static void parseToHTML(Scanner scan){
 		if(scan == null){
 			return;
 		}
@@ -39,7 +39,7 @@ public class Parser {
 		if (res != JFileChooser.APPROVE_OPTION) {
 			return;
 		}
-		parseFile(readFile(chooser.getSelectedFile()));
+		parseToHTML(readFile(chooser.getSelectedFile()));
 	}
 	
 	public static void main(String [] args) {

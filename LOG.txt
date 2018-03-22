@@ -40,3 +40,5 @@ fixed parsing. need to fix heading regex
 https://regexr.com/
 2:25pm
 fixed header. both heading1 and heading2 should work
+4:00pm
+wrote more tests

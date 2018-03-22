@@ -48,7 +48,8 @@ public class HTML_Parser {
 	}
 
 
-
+	//TODO
+	//fix this loop
 	public void parseScanner(Scanner scan) {
 		while (scan.hasNext()) {
 			String line = scan.nextLine();
@@ -61,12 +62,17 @@ public class HTML_Parser {
 				this.htmlNode.addNode(parseHeader1(sc));
 			}
 			else{
-				scan.next();
+				sc.next();
 			}
 		}
 		scan.close();
 	}
 
+	/**
+	 * parses text and turns it into an <h1></h1> node
+	 * @param scan
+	 * @return
+	 */
 	private AbstractNode parseHeader1(Scanner scan) {
 		System.out.println(scan.next());
 		HeaderNode1 h1 = new HeaderNode1();
@@ -86,14 +92,11 @@ public class HTML_Parser {
 		return h1;
 	}
 
-	private AbstractNode parseBold(String string) {
-		return new Bold_Node(string);
-	}
-
-	private AbstractNode parseItalic(String string) {
-		return new Italic_Node(string);
-	}
-
+	/**
+	 * parses text and turns it into an <h2></h2> node
+	 * @param scan
+	 * @return
+	 */
 	private AbstractNode parseHeader2(Scanner scan) {
 		System.out.println(scan.next());
 		HeaderNode2 h2 = new HeaderNode2();
@@ -112,5 +115,15 @@ public class HTML_Parser {
 		}
 		return h2;
 	}
+	
+	private AbstractNode parseBold(String string) {
+		return new Bold_Node(string);
+	}
+
+	private AbstractNode parseItalic(String string) {
+		return new Italic_Node(string);
+	}
+
+
 
 }

@@ -11,7 +11,7 @@ public class Bold_Node extends AbstractNode {
 	public Bold_Node(String text) {
 		this.text = new StringBuilder();
 		for (char c : text.toCharArray()) {
-			if (c == '#') {
+			if (c == '*') {
 				continue;
 			}
 			this.text.append(c);
