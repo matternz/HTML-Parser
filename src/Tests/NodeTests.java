@@ -16,17 +16,6 @@ import Parser.HTML_Parser;
 
 public class NodeTests {
 
-	public NodeTests() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Node createParagraph() {
-		// https://stackoverflow.com/questions/326390/how-do-i-create-a-java-string-from-the-contents-of-a-file
-
-		Node paragraph = new Paragraph_Node(readLineByLineJava8("src/Tests/Paragraph.txt"));
-		return paragraph;
-	}
-
 	/**
 	 * https://howtodoinjava.com/core-java/io/java-read-file-to-string-examples/
 	 *
@@ -110,7 +99,7 @@ public class NodeTests {
 	@Test
 	public void italic_test(){
 		String text = "*italics*";
-		assertEquals("<html><em>italics<em></html>",createHTML(text));
+		assertEquals("<html><p><em>italics</em></p></html>",createHTML(text));
 	}
 	
 	/**
@@ -119,7 +108,7 @@ public class NodeTests {
 	@Test
 	public void bold_test(){
 		String text = "**bold**";
-		assertEquals("<html><strong>italics<em></strong>",createHTML(text));
+		assertEquals("<html><p><strong>bold</strong></p></html>",createHTML(text));
 	}
 	
 	

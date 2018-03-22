@@ -4,14 +4,7 @@ public class Italic_Node extends AbstractNode {
 
 	StringBuilder text;
 
-	public Italic_Node(String text) {
-		this.text = new StringBuilder();
-		for(char c : text.toCharArray()) {
-			if(c == '*') {
-				continue;
-			}
-			this.text.append(c);
-		}
+	public Italic_Node() {
 	}
 
 	@Override
@@ -27,7 +20,8 @@ public class Italic_Node extends AbstractNode {
 
 	@Override
 	public String toString(){
-		return this.text.toString();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -36,94 +36,128 @@ public class HTML_Parser {
 	public HTML_Parser() {
 		this.htmlNode = new HTML_Node();
 	}
-	
+
 	public HTML_Node getHtmlNode() {
 		return htmlNode;
 	}
-
-
 
 	public void setHtmlNode(HTML_Node htmlNode) {
 		this.htmlNode = htmlNode;
 	}
 
-
-	//TODO
-	//fix this loop
+	// TODO
+	// fix this loop
 	public void parseScanner(Scanner scan) {
-		while (scan.hasNext()) {
+		while (scan.hasNextLine()) {
 			String line = scan.nextLine();
 			Scanner sc = new Scanner(line);
-			if (sc.hasNext(HEADING2)) {
-				System.out.println("heading2");
-				this.htmlNode.addNode(parseHeader2(sc));
-			} else if (sc.hasNext(HEADING1)) {
-				System.out.println("heading1");
-				this.htmlNode.addNode(parseHeader1(sc));
-			}
-			else{
-				sc.next();
+			while (sc.hasNext()) {
+				if (sc.hasNext(HEADING2)) {
+					this.htmlNode.addNode(parseHeader2(sc));
+				} else if (sc.hasNext(HEADING1)) {
+					this.htmlNode.addNode(parseHeader1(sc));
+				} else if (sc.hasNext(ITALIC)) {
+					//this.htmlNode.addNode(parseItalic(sc.next()));
+					Paragraph_Node para = new Paragraph_Node();
+					para.addNode(parseItalic(sc.next()));
+					this.htmlNode.addNode(para);
+				} else if (sc.hasNext(BOLD)) {
+					//this.htmlNode.addNode(parseBold(sc.next()));
+					Paragraph_Node para = new Paragraph_Node();
+					para.addNode(parseBold(sc.next()));
+					this.htmlNode.addNode(para);
+				} else {
+					sc.next();
+				}
 			}
 		}
 		scan.close();
 	}
 
 	/**
-	 * parses text and turns it into an <h1></h1> node
+	 * parses text and turns it into an
+	 * <h1></h1> node
+	 * 
 	 * @param scan
 	 * @return
 	 */
 	private AbstractNode parseHeader1(Scanner scan) {
-		System.out.println(scan.next());
+		scan.next();
 		HeaderNode1 h1 = new HeaderNode1();
-		while(scan.hasNext()){
-			if(scan.hasNext(ITALIC)){
+		while (scan.hasNext()) {
+			if (scan.hasNext(ITALIC)) {
 				h1.addNode(parseItalic(scan.next()));
-			}
-			else if(scan.hasNext(BOLD)){
+			} else if (scan.hasNext(BOLD)) {
 				h1.addNode(parseBold(scan.next()));
 			}
-			//add check for startign with bold or italic
-			else{
-				h1.addNode( new TextNode(scan.next()));
-				
+			// add check for startign with bold or italic
+			else {
+				h1.addNode(new TextNode(scan.next()));
+
 			}
 		}
 		return h1;
 	}
 
 	/**
-	 * parses text and turns it into an <h2></h2> node
+	 * parses text and turns it into an
+	 * <h2></h2> node
+	 * 
 	 * @param scan
 	 * @return
 	 */
 	private AbstractNode parseHeader2(Scanner scan) {
-		System.out.println(scan.next());
+		scan.next();
 		HeaderNode2 h2 = new HeaderNode2();
-		while(scan.hasNext()){
-			if(scan.hasNext(ITALIC)){
+		while (scan.hasNext()) {
+			if (scan.hasNext(ITALIC)) {
 				h2.addNode(parseItalic(scan.next()));
-			}
-			else if(scan.hasNext(BOLD)){
+			} else if (scan.hasNext(BOLD)) {
 				h2.addNode(parseBold(scan.next()));
 			}
-			//add check for startign with bold or italic
-			else{
-				h2.addNode( new TextNode(scan.next()));
-				
+			// add check for starting with bold or italic
+			else {
+				//scan.useDelimiter("");
+				h2.addNode(new TextNode(scan.next()));
+				//scan.reset();
+
 			}
 		}
 		return h2;
 	}
-	
-	private AbstractNode parseBold(String string) {
-		return new Bold_Node(string);
+
+	private AbstractNode parseBold(String str) {
+		StringBuilder text = new StringBuilder();
+		Scanner scan = new Scanner(str);
+		scan.useDelimiter("");
+		while(scan.hasNext()){
+			if(scan.hasNext("\\*")){
+				scan.next();
+			}
+			else{
+				text.append(scan.next());
+			}
+		}
+		Bold_Node bold = new Bold_Node();
+		bold.addNode(new TextNode(text.toString()));
+		return bold;
 	}
 
-	private AbstractNode parseItalic(String string) {
-		return new Italic_Node(string);
+	private AbstractNode parseItalic(String str) {
+		StringBuilder text = new StringBuilder();
+		Scanner scan = new Scanner(str);
+		scan.useDelimiter("");
+		while(scan.hasNext()){
+			if(scan.hasNext("\\*")){
+				scan.next();
+			}
+			else{
+				text.append(scan.next());
+			}
+		}
+		Italic_Node italic = new Italic_Node();
+		italic.addNode(new TextNode(text.toString()));
+		return italic;
 	}
-
-
 
 }
