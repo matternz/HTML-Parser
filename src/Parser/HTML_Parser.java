@@ -23,7 +23,7 @@ public class HTML_Parser {
 	// Pattern.compile("\\s*^\\s*$\\s*", Pattern.MULTILINE);
 
 	// https://www.tutorialspoint.com/java/java_regular_expressions.htm
-	private static final Pattern ITALIC = Pattern.compile("^[*][1]?[a-zA-Z0-9]+[*][1]?");
+	private static final Pattern ITALIC = Pattern.compile("[*]{1}?[a-zA-Z0-9]+[*]{1}");
 	// https://stackoverflow.com/questions/43932001/test-to-see-if-string-contains-2-letters-followed-by-7-numbers
 	private static final Pattern BOLD = Pattern.compile("[*]{2}[a-zA-Z0-9]*[*]{2}");
 	private static final Pattern HEADING1 = Pattern.compile("^[#]{1}");
@@ -50,43 +50,29 @@ public class HTML_Parser {
 
 
 	public void parseScanner(Scanner scan) {
-		/*
-		 * // https://codereview.stackexchange.com/questions/81852/empty-line-
-		 * delimiter-single-line-output int i = 0; while (scan.hasNext()) { if
-		 * (scan.hasNext(PARAGRAPH)) { i++; scan.next(); if (i > 1) {
-		 * System.out.print("PARAGRAPH"); } continue; }
-		 * System.out.print(scan.next()); }
-		 */
-
-		// -------------------
-		/*
-		 * split everything into lines loop through each line list of lists list
-		 * of each line with each line having a list of nodes....
-		 */
-		// -------------------
 		while (scan.hasNext()) {
 			StringBuilder text = new StringBuilder();
 			if (scan.hasNext(HEADING2)) {
 				String line = scan.nextLine();
 				Scanner sc = new Scanner(line);
-				System.out.println("heading1");
+				System.out.println("heading2");
 				this.htmlNode.addNode(parseHeader2(sc));
 			} else if (scan.hasNext(HEADING1)) {
 				String line = scan.nextLine();
 				Scanner sc = new Scanner(line);
-				System.out.println("heading2");
+				System.out.println("heading1");
 				this.htmlNode.addNode(parseHeader1(sc));
+			}
+			else{
+				scan.next();
 			}
 		}
 		scan.close();
 	}
 
 	private AbstractNode parseHeader1(Scanner scan) {
-		scan.useDelimiter("");
-		System.out.println(scan.next());
 		System.out.println(scan.next());
 		HeaderNode1 h1 = new HeaderNode1();
-		StringBuilder str = new StringBuilder();
 		while(scan.hasNext()){
 			if(scan.hasNext(ITALIC)){
 				h1.addNode(parseItalic(scan.next()));
@@ -112,8 +98,22 @@ public class HTML_Parser {
 	}
 
 	private AbstractNode parseHeader2(Scanner scan) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println(scan.next());
+		HeaderNode2 h2 = new HeaderNode2();
+		while(scan.hasNext()){
+			if(scan.hasNext(ITALIC)){
+				h2.addNode(parseItalic(scan.next()));
+			}
+			else if(scan.hasNext(BOLD)){
+				h2.addNode(parseBold(scan.next()));
+			}
+			//add check for startign with bold or italic
+			else{
+				h2.addNode( new TextNode(scan.next()));
+				
+			}
+		}
+		return h2;
 	}
 
 }

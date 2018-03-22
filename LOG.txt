@@ -14,6 +14,7 @@ https://stackoverflow.com/questions/326390/how-do-i-create-a-java-string-from-th
 created node classes for first part
 started creating testing
 19/03/2018
+ https://codereview.stackexchange.com/questions/81852/empty-line-delimiter-single-line-output
 2:00pm-2:40pm
 finished Italic node parsing.
 need to modify tests to handle the same way parser handles
@@ -33,3 +34,7 @@ https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
 9:00pm
 changed approach
 decided to have linked list / tree approach/ created new abstract class and create new methods to parse to html
+22/03/2018
+1:00pm
+fixed parsing. need to fix heading regex
+https://regexr.com/
