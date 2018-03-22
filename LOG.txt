@@ -38,3 +38,5 @@ decided to have linked list / tree approach/ created new abstract class and crea
 1:00pm
 fixed parsing. need to fix heading regex
 https://regexr.com/
+2:25pm
+fixed header. both heading1 and heading2 should work

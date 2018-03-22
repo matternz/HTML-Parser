@@ -26,8 +26,8 @@ public class HTML_Parser {
 	private static final Pattern ITALIC = Pattern.compile("[*]{1}?[a-zA-Z0-9]+[*]{1}");
 	// https://stackoverflow.com/questions/43932001/test-to-see-if-string-contains-2-letters-followed-by-7-numbers
 	private static final Pattern BOLD = Pattern.compile("[*]{2}[a-zA-Z0-9]*[*]{2}");
-	private static final Pattern HEADING1 = Pattern.compile("^[#]{1}");
-	private static final Pattern HEADING2 = Pattern.compile("^[#]{2}");
+	private static final Pattern HEADING1 = Pattern.compile("[#]{1}");
+	private static final Pattern HEADING2 = Pattern.compile("[#]{2}");
 	private static final Pattern NUMBERED_LIST = Pattern.compile("[1-9]{1}[\\.]{1}[ ]{1}[a-zA-Z0-9]*");
 	private static final Pattern BULLETED_LIST = Pattern.compile("\\* ");
 	private static final Pattern SEPERATOR = Pattern.compile("^---");
@@ -51,15 +51,12 @@ public class HTML_Parser {
 
 	public void parseScanner(Scanner scan) {
 		while (scan.hasNext()) {
-			StringBuilder text = new StringBuilder();
-			if (scan.hasNext(HEADING2)) {
-				String line = scan.nextLine();
-				Scanner sc = new Scanner(line);
+			String line = scan.nextLine();
+			Scanner sc = new Scanner(line);
+			if (sc.hasNext(HEADING2)) {
 				System.out.println("heading2");
 				this.htmlNode.addNode(parseHeader2(sc));
-			} else if (scan.hasNext(HEADING1)) {
-				String line = scan.nextLine();
-				Scanner sc = new Scanner(line);
+			} else if (sc.hasNext(HEADING1)) {
 				System.out.println("heading1");
 				this.htmlNode.addNode(parseHeader1(sc));
 			}
