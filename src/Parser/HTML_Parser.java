@@ -1,13 +1,7 @@
 package Parser;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-import javax.print.DocFlavor.CHAR_ARRAY;
-
-import com.sun.org.apache.xerces.internal.impl.xs.identity.Selector.Matcher;
-
 import Nodes.*;
 
 public class HTML_Parser {
@@ -150,6 +144,7 @@ public class HTML_Parser {
 				text.append(scan.next());
 			}
 		}
+		scan.close();
 		Bold_Node bold = new Bold_Node();
 		bold.addNode(new TextNode(text.toString()));
 		return bold;
@@ -171,6 +166,7 @@ public class HTML_Parser {
 				text.append(scan.next());
 			}
 		}
+		scan.close();
 		Italic_Node italic = new Italic_Node();
 		italic.addNode(new TextNode(text.toString()));
 		return italic;

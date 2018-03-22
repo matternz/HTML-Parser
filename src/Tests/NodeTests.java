@@ -216,7 +216,7 @@ public class NodeTests {
 	@Test
 	public void inline_code_test(){
 		String text = "`inline`";
-		assertEquals("<html><p>inline</p></html>", createHTML(text));
+		assertEquals("<html><code>inline</code></html>", createHTML(text));
 	}
 	
 	/**
@@ -225,6 +225,6 @@ public class NodeTests {
 	@Test
 	public void block_code_test(){
 		String text = "```\nblock\n```";
-		assertEquals("<html><pre><code></code></pre></html>",createHTML(text));
+		assertEquals("<html><pre><code>block</code></pre></html>",createHTML(text));
 	}
 }
