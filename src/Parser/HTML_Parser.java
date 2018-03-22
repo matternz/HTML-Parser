@@ -45,6 +45,10 @@ public class HTML_Parser {
 		this.htmlNode = htmlNode;
 	}
 
+	/**
+	 * reads through scanner and turns it into html code;
+	 * @param scan
+	 */
 	public void parseScanner(Scanner scan) {
 		while (scan.hasNextLine()) {
 			String line = scan.nextLine();
@@ -130,6 +134,11 @@ public class HTML_Parser {
 		return h2;
 	}
 
+	/**
+	 * creates new italic node and returns it
+	 * @param str
+	 * @return
+	 */
 	private AbstractNode parseBold(String str) {
 		StringBuilder text = new StringBuilder();
 		Scanner scan = new Scanner(str);
@@ -146,6 +155,11 @@ public class HTML_Parser {
 		return bold;
 	}
 
+	/**
+	 * creates new italic node and returns it
+	 * @param str
+	 * @return
+	 */
 	private AbstractNode parseItalic(String str) {
 		StringBuilder text = new StringBuilder();
 		Scanner scan = new Scanner(str);
