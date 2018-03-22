@@ -1,33 +1,26 @@
 package Nodes;
+
 /**
  * 
  */
 
-
-public class Bold_Node implements Node {
+public class Bold_Node extends AbstractNode {
 
 	StringBuilder text;
-	StringBuilder htmlText;
-	StringBuilder latexText;
-	
-	
-	/**
-	 * 
-	 * @param text
-	 */
+
 	public Bold_Node(String text) {
 		this.text = new StringBuilder();
-		this.htmlText = new StringBuilder();
-		this.latexText = new StringBuilder();
-		this.text.append(text);
+		for (char c : text.toCharArray()) {
+			if (c == '#') {
+				continue;
+			}
+			this.text.append(c);
+		}
 	}
 
 	@Override
 	public String getHTML() {
-		this.htmlText.append("<strong>");
-		this.htmlText.append(this.text);
-		this.htmlText.append("</strong>");
-		return this.htmlText.toString();
+		return "<strong>"+super.getHTML()+"</strong>";
 	}
 
 	@Override
@@ -37,8 +30,8 @@ public class Bold_Node implements Node {
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return this.text.toString();
 	}
-	
+
 }

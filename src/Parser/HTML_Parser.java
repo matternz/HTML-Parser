@@ -26,8 +26,8 @@ public class HTML_Parser {
 	private static final Pattern ITALIC = Pattern.compile("^[*][1]?[a-zA-Z0-9]+[*][1]?");
 	// https://stackoverflow.com/questions/43932001/test-to-see-if-string-contains-2-letters-followed-by-7-numbers
 	private static final Pattern BOLD = Pattern.compile("[*]{2}[a-zA-Z0-9]*[*]{2}");
-	private static final Pattern HEADING1 = Pattern.compile("[#]+");
-	private static final Pattern HEADING2 = Pattern.compile("[##]+");
+	private static final Pattern HEADING1 = Pattern.compile("^[#]{1}");
+	private static final Pattern HEADING2 = Pattern.compile("^[#]{2}");
 	private static final Pattern NUMBERED_LIST = Pattern.compile("[1-9]{1}[\\.]{1}[ ]{1}[a-zA-Z0-9]*");
 	private static final Pattern BULLETED_LIST = Pattern.compile("\\* ");
 	private static final Pattern SEPERATOR = Pattern.compile("^---");
@@ -36,6 +36,18 @@ public class HTML_Parser {
 	public HTML_Parser() {
 		this.htmlNode = new HTML_Node();
 	}
+	
+	public HTML_Node getHtmlNode() {
+		return htmlNode;
+	}
+
+
+
+	public void setHtmlNode(HTML_Node htmlNode) {
+		this.htmlNode = htmlNode;
+	}
+
+
 
 	public void parseScanner(Scanner scan) {
 		/*
@@ -57,19 +69,22 @@ public class HTML_Parser {
 			if (scan.hasNext(HEADING2)) {
 				String line = scan.nextLine();
 				Scanner sc = new Scanner(line);
+				System.out.println("heading1");
 				this.htmlNode.addNode(parseHeader2(sc));
 			} else if (scan.hasNext(HEADING1)) {
 				String line = scan.nextLine();
 				Scanner sc = new Scanner(line);
+				System.out.println("heading2");
 				this.htmlNode.addNode(parseHeader1(sc));
 			}
-			scan.close();
 		}
+		scan.close();
 	}
 
-	private Node parseHeader1(Scanner scan) {
-		scan.next();
-		scan.next();
+	private AbstractNode parseHeader1(Scanner scan) {
+		scan.useDelimiter("");
+		System.out.println(scan.next());
+		System.out.println(scan.next());
 		HeaderNode1 h1 = new HeaderNode1();
 		StringBuilder str = new StringBuilder();
 		while(scan.hasNext()){
@@ -81,22 +96,22 @@ public class HTML_Parser {
 			}
 			//add check for startign with bold or italic
 			else{
-				h1.addNode((Node) new TextNode(scan.next()));
+				h1.addNode( new TextNode(scan.next()));
+				
 			}
 		}
-		return (Node) h1;
+		return h1;
 	}
 
-	private Node parseBold(String string) {
-		string.
+	private AbstractNode parseBold(String string) {
+		return new Bold_Node(string);
 	}
 
-	private Node parseItalic(String string) {
-		// TODO Auto-generated method stub
-		return null;
+	private AbstractNode parseItalic(String string) {
+		return new Italic_Node(string);
 	}
 
-	private Node parseHeader2(Scanner scan) {
+	private AbstractNode parseHeader2(Scanner scan) {
 		// TODO Auto-generated method stub
 		return null;
 	}

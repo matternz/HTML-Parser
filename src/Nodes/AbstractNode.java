@@ -3,23 +3,30 @@ package Nodes;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractNode extends MainNode {
+public abstract class AbstractNode {
 
-	private List<Node> nodes;
+	public List<AbstractNode> nodes;
 	
 	public AbstractNode() {
 		this.nodes = new ArrayList<>();
 	}
 	
-	public void addNode(Node n){
+	public void addNode(AbstractNode n){
 		this.nodes.add(n);
 	}
 	
-	@Override
+	public String toString(){
+		return null;
+	}
+	
+	public String getLatex(){
+		return null;
+	}
+	
 	public String getHTML(){
 		StringBuilder str = new StringBuilder();
-		for(Node n : this.nodes){
-			str.append(n.toString());
+		for(AbstractNode n : this.nodes){
+			str.append(n.getHTML());
 		}
 		return str.toString();
 	}

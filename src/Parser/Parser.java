@@ -27,9 +27,9 @@ public class Parser {
 		if(scan == null){
 			return;
 		}
-		
 		HTML_Parser htmlParser = new HTML_Parser();
 		htmlParser.parseScanner(scan);
+		System.out.println(htmlParser.getHtmlNode().getHTML());
 		
 	}
 	
