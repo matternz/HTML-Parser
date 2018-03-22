@@ -46,3 +46,4 @@ wrote more tests
 updated tests
 created paragraph node
 all tests except complex header pass
+added tests for numbered list, bulleted, seperator, blockquote, inline, block
