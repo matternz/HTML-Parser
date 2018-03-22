@@ -45,8 +45,6 @@ public class HTML_Parser {
 		this.htmlNode = htmlNode;
 	}
 
-	// TODO
-	// fix this loop
 	public void parseScanner(Scanner scan) {
 		while (scan.hasNextLine()) {
 			String line = scan.nextLine();
@@ -57,17 +55,19 @@ public class HTML_Parser {
 				} else if (sc.hasNext(HEADING1)) {
 					this.htmlNode.addNode(parseHeader1(sc));
 				} else if (sc.hasNext(ITALIC)) {
-					//this.htmlNode.addNode(parseItalic(sc.next()));
+					// this.htmlNode.addNode(parseItalic(sc.next()));
 					Paragraph_Node para = new Paragraph_Node();
 					para.addNode(parseItalic(sc.next()));
 					this.htmlNode.addNode(para);
 				} else if (sc.hasNext(BOLD)) {
-					//this.htmlNode.addNode(parseBold(sc.next()));
+					// this.htmlNode.addNode(parseBold(sc.next()));
 					Paragraph_Node para = new Paragraph_Node();
 					para.addNode(parseBold(sc.next()));
 					this.htmlNode.addNode(para);
 				} else {
-					sc.next();
+					Paragraph_Node para = new Paragraph_Node();
+					para.addNode(new TextNode(sc.next()));
+					this.htmlNode.addNode(para);
 				}
 			}
 		}
@@ -83,6 +83,9 @@ public class HTML_Parser {
 	 */
 	private AbstractNode parseHeader1(Scanner scan) {
 		scan.next();
+		scan.useDelimiter("");
+		scan.next();
+		scan.reset();
 		HeaderNode1 h1 = new HeaderNode1();
 		while (scan.hasNext()) {
 			if (scan.hasNext(ITALIC)) {
@@ -92,8 +95,9 @@ public class HTML_Parser {
 			}
 			// add check for startign with bold or italic
 			else {
+				scan.useDelimiter("");
 				h1.addNode(new TextNode(scan.next()));
-
+				scan.reset();
 			}
 		}
 		return h1;
@@ -117,9 +121,9 @@ public class HTML_Parser {
 			}
 			// add check for starting with bold or italic
 			else {
-				//scan.useDelimiter("");
+				// scan.useDelimiter("");
 				h2.addNode(new TextNode(scan.next()));
-				//scan.reset();
+				// scan.reset();
 
 			}
 		}
@@ -130,11 +134,10 @@ public class HTML_Parser {
 		StringBuilder text = new StringBuilder();
 		Scanner scan = new Scanner(str);
 		scan.useDelimiter("");
-		while(scan.hasNext()){
-			if(scan.hasNext("\\*")){
+		while (scan.hasNext()) {
+			if (scan.hasNext("\\*")) {
 				scan.next();
-			}
-			else{
+			} else {
 				text.append(scan.next());
 			}
 		}
@@ -147,11 +150,10 @@ public class HTML_Parser {
 		StringBuilder text = new StringBuilder();
 		Scanner scan = new Scanner(str);
 		scan.useDelimiter("");
-		while(scan.hasNext()){
-			if(scan.hasNext("\\*")){
+		while (scan.hasNext()) {
+			if (scan.hasNext("\\*")) {
 				scan.next();
-			}
-			else{
+			} else {
 				text.append(scan.next());
 			}
 		}
