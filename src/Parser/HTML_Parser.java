@@ -77,7 +77,8 @@ public class HTML_Parser {
 	public void parse(Scanner scan) {
 		while (scan.hasNextLine()) {
 			if (scan.hasNext(BLOCK_QUOTE)) {
-				//this.htmlNode.addNode(parseBlockQuote(new Scanner(scan.nextLine())));
+				// this.htmlNode.addNode(parseBlockQuote(new
+				// Scanner(scan.nextLine())));
 			} else if (scan.hasNext(HEADING1)) {
 				this.htmlNode.addNode(parseHeader1(new Scanner(scan.nextLine())));
 			} else if (scan.hasNext(HEADING2)) {
@@ -91,17 +92,32 @@ public class HTML_Parser {
 					// scan.nextLine();
 				}
 			} else if (scan.hasNext(SEPERATOR)) {
-				//this.htmlNode.addNode(parseSeperator());
-				//scan.nextLine();
+				// this.htmlNode.addNode(parseSeperator());
+				// scan.nextLine();
 			} else if (scan.hasNext(BLOCK_CODE)) {
 				while (scan.hasNextLine()) {
 					if (scan.hasNext(BLOCK_CODE)) {
 						// break out of hasNextLine loop
 					}
 				}
+			} else if (scan.hasNext(ITALIC)) {
+				//which part of the line to you give to the other parsers?
+				//
+				//create new paragraph
+				//add italic node to it
+				//check if anything inside italic node
+				//add to html node
+			} else if (scan.hasNext(BOLD)) {
+				//which part of the line to you give to the other parsers?
+				//
+				//create new paragraph
+				//add bold node to it
+				//check if anything inside bold node
+				//add to html node
 			} else {
 				// check what the line starts with
-				// create new method to check for paragraphs italic and bold within?
+				// create new method to check for paragraphs italic and bold
+				// within?
 
 			}
 		}
