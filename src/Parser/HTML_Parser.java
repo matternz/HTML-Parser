@@ -42,6 +42,7 @@ public class HTML_Parser {
 
 	/**
 	 * reads through scanner and turns it into html code;
+	 * 
 	 * @param scan
 	 */
 	public void parseScanner(Scanner scan) {
@@ -72,41 +73,36 @@ public class HTML_Parser {
 		}
 		scan.close();
 	}
-	
-	public void parse(Scanner scan){
-		while(scan.hasNextLine()){
-			if(scan.hasNext(BLOCK_QUOTE)){
-				
-			}
-			else if(scan.hasNext(HEADING1)){
-				
-			}
-			else if(scan.hasNext(HEADING2)){
-				
-			}
-			else if(scan.hasNext(NUMBERED_LIST)){
-				while(scan.hasNext(NUMBERED_LIST)){
-					//scan.nextLine();
+
+	public void parse(Scanner scan) {
+		while (scan.hasNextLine()) {
+			if (scan.hasNext(BLOCK_QUOTE)) {
+				//this.htmlNode.addNode(parseBlockQuote(new Scanner(scan.nextLine())));
+			} else if (scan.hasNext(HEADING1)) {
+				this.htmlNode.addNode(parseHeader1(new Scanner(scan.nextLine())));
+			} else if (scan.hasNext(HEADING2)) {
+				this.htmlNode.addNode(parseHeader2(new Scanner(scan.nextLine())));
+			} else if (scan.hasNext(NUMBERED_LIST)) {
+				while (scan.hasNext(NUMBERED_LIST)) {
+					// scan.nextLine();
 				}
-			}
-			else if(scan.hasNext(BULLETED_LIST)){
-				while(scan.hasNext(BULLETED_LIST)){
-					//scan.nextLine();
+			} else if (scan.hasNext(BULLETED_LIST)) {
+				while (scan.hasNext(BULLETED_LIST)) {
+					// scan.nextLine();
 				}
-			}
-			else if(scan.hasNext(SEPERATOR)){
-				
-			}
-			else if(scan.hasNext(BLOCK_CODE)){
-				while(scan.hasNextLine()){
-					if(scan.hasNext(BLOCK_CODE)){
-						//break out of hasNextLine loop
+			} else if (scan.hasNext(SEPERATOR)) {
+				//this.htmlNode.addNode(parseSeperator());
+				//scan.nextLine();
+			} else if (scan.hasNext(BLOCK_CODE)) {
+				while (scan.hasNextLine()) {
+					if (scan.hasNext(BLOCK_CODE)) {
+						// break out of hasNextLine loop
 					}
 				}
-			}
-			else{
-				//check what the line starts with
-				//create new method to check for paragraphs italic and bold within?
+			} else {
+				// check what the line starts with
+				// create new method to check for paragraphs italic and bold within?
+
 			}
 		}
 	}
@@ -169,6 +165,7 @@ public class HTML_Parser {
 
 	/**
 	 * creates new italic node and returns it
+	 * 
 	 * @param str
 	 * @return
 	 */
@@ -191,6 +188,7 @@ public class HTML_Parser {
 
 	/**
 	 * creates new italic node and returns it
+	 * 
 	 * @param str
 	 * @return
 	 */

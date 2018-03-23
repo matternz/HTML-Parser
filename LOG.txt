@@ -54,3 +54,4 @@ added more nodes and fixed unit tested
 23/03/2018
 1:00pm
 created new parse method in HTML_Parser to handle more types of markdown
+added more to parse method
