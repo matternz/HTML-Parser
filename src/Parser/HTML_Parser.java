@@ -24,8 +24,9 @@ public class HTML_Parser {
 	private static final Pattern HEADING2 = Pattern.compile("[#]{2}");
 	private static final Pattern NUMBERED_LIST = Pattern.compile("[1-9]{1}[\\.]{1}[ ]{1}[a-zA-Z0-9]*");
 	private static final Pattern BULLETED_LIST = Pattern.compile("\\* ");
-	private static final Pattern SEPERATOR = Pattern.compile("^---");
+	private static final Pattern SEPERATOR = Pattern.compile("---");
 	private static final Pattern BLOCK_QUOTE = Pattern.compile(">");
+	private static final Pattern BLOCK_CODE = Pattern.compile("```");
 
 	public HTML_Parser() {
 		this.htmlNode = new HTML_Node();
@@ -70,6 +71,44 @@ public class HTML_Parser {
 			}
 		}
 		scan.close();
+	}
+	
+	public void parse(Scanner scan){
+		while(scan.hasNextLine()){
+			if(scan.hasNext(BLOCK_QUOTE)){
+				
+			}
+			else if(scan.hasNext(HEADING1)){
+				
+			}
+			else if(scan.hasNext(HEADING2)){
+				
+			}
+			else if(scan.hasNext(NUMBERED_LIST)){
+				while(scan.hasNext(NUMBERED_LIST)){
+					//scan.nextLine();
+				}
+			}
+			else if(scan.hasNext(BULLETED_LIST)){
+				while(scan.hasNext(BULLETED_LIST)){
+					//scan.nextLine();
+				}
+			}
+			else if(scan.hasNext(SEPERATOR)){
+				
+			}
+			else if(scan.hasNext(BLOCK_CODE)){
+				while(scan.hasNextLine()){
+					if(scan.hasNext(BLOCK_CODE)){
+						//break out of hasNextLine loop
+					}
+				}
+			}
+			else{
+				//check what the line starts with
+				//create new method to check for paragraphs italic and bold within?
+			}
+		}
 	}
 
 	/**

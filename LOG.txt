@@ -50,4 +50,7 @@ added tests for numbered list, bulleted, seperator, blockquote, inline, block
 added comments to htmlparser
 23/03/18
 11:00am
-added more nodes and fixed unit teste
+added more nodes and fixed unit tested
+23/03/2018
+1:00pm
+created new parse method in HTML_Parser to handle more types of markdown
