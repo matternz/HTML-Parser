@@ -45,7 +45,7 @@ public class HTML_Parser {
 	 * 
 	 * @param scan
 	 */
-	public void parseScanner(Scanner scan) {
+	public void parse(Scanner scan) {
 		while (scan.hasNextLine()) {
 			String line = scan.nextLine();
 			Scanner sc = new Scanner(line);
@@ -74,30 +74,35 @@ public class HTML_Parser {
 		scan.close();
 	}
 
-	public void parse(Scanner scan) {
+	public void parseScanner(Scanner scan) {
 		while (scan.hasNextLine()) {
 			if (scan.hasNext(BLOCK_QUOTE)) {
 				// this.htmlNode.addNode(parseBlockQuote(new
-				// Scanner(scan.nextLine())));
+				this.htmlNode.addNode(parseBlockQuote(scan.nextLine()));
 			} else if (scan.hasNext(HEADING1)) {
 				this.htmlNode.addNode(parseHeader1(new Scanner(scan.nextLine())));
 			} else if (scan.hasNext(HEADING2)) {
 				this.htmlNode.addNode(parseHeader2(new Scanner(scan.nextLine())));
 			} else if (scan.hasNext(NUMBERED_LIST)) {
 				while (scan.hasNext(NUMBERED_LIST)) {
-					// scan.nextLine();
+					scan.nextLine();
 				}
+				scan.nextLine();
 			} else if (scan.hasNext(BULLETED_LIST)) {
 				while (scan.hasNext(BULLETED_LIST)) {
-					// scan.nextLine();
+					scan.nextLine();
 				}
+				scan.nextLine();
 			} else if (scan.hasNext(SEPERATOR)) {
 				// this.htmlNode.addNode(parseSeperator());
-				// scan.nextLine();
+				scan.nextLine();
 			} else if (scan.hasNext(BLOCK_CODE)) {
 				while (scan.hasNextLine()) {
 					if (scan.hasNext(BLOCK_CODE)) {
 						// break out of hasNextLine loop
+						scan.nextLine();
+					}else{
+						scan.nextLine();
 					}
 				}
 			} else if (scan.hasNext(ITALIC)) {
@@ -107,6 +112,9 @@ public class HTML_Parser {
 				//add italic node to it
 				//check if anything inside italic node
 				//add to html node
+				Paragraph_Node para = new Paragraph_Node();
+				para.addNode(parseItalic(scan.next()));
+				this.htmlNode.addNode(para);
 			} else if (scan.hasNext(BOLD)) {
 				//which part of the line to you give to the other parsers?
 				//
@@ -114,13 +122,35 @@ public class HTML_Parser {
 				//add bold node to it
 				//check if anything inside bold node
 				//add to html node
+				Paragraph_Node para = new Paragraph_Node();
+				para.addNode(parseBold(scan.next()));
+				this.htmlNode.addNode(para);
 			} else {
 				// check what the line starts with
 				// create new method to check for paragraphs italic and bold
 				// within?
-
+				scan.nextLine();
 			}
 		}
+	}
+
+	/**
+	 * 
+	 * @param line
+	 * @return
+	 */
+	private AbstractNode parseBlockQuote(String line) {
+		Scanner scan = new Scanner(line);
+		scan.useDelimiter("");
+		for(int i = 0; i < 2; i++){
+			scan.next();
+		}
+		Block_Quote_Node block = new Block_Quote_Node();
+		Paragraph_Node para = new Paragraph_Node();
+		para.addNode(new TextNode(scan.nextLine()));
+		block.addNode(para);
+		scan.close();
+		return block;
 	}
 
 	/**

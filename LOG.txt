@@ -56,3 +56,5 @@ added more nodes and fixed unit tested
 created new parse method in HTML_Parser to handle more types of markdown
 added more to parse method
 added pseudocode to parse method
+9:00pm
+block quote now works
