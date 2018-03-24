@@ -61,3 +61,4 @@ block quote now works
 24/03/2018
 4:00pm
 updated parser seperator and paragraph tests now pass
+updated parser bullet_test_01 now passes

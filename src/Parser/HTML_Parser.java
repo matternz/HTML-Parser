@@ -23,7 +23,7 @@ public class HTML_Parser {
 	private static final Pattern HEADING1 = Pattern.compile("[#]{1}");
 	private static final Pattern HEADING2 = Pattern.compile("[#]{2}");
 	private static final Pattern NUMBERED_LIST = Pattern.compile("[1-9]{1}[\\.]{1}[ ]{1}[a-zA-Z0-9]*");
-	private static final Pattern BULLETED_LIST = Pattern.compile("\\* ");
+	private static final Pattern BULLETED_LIST = Pattern.compile("[*]");
 	private static final Pattern SEPERATOR = Pattern.compile("---");
 	private static final Pattern BLOCK_QUOTE = Pattern.compile(">");
 	private static final Pattern BLOCK_CODE = Pattern.compile("```");
@@ -58,10 +58,10 @@ public class HTML_Parser {
 				}
 				scan.nextLine();
 			} else if (scan.hasNext(BULLETED_LIST)) {
-				while (scan.hasNext(BULLETED_LIST)) {
-					scan.nextLine();
+				scan.next();
+				while(scan.hasNext()){
+					this.htmlNode.addNode(parseBulletedList(scan.nextLine()));
 				}
-				scan.nextLine();
 			} else if (scan.hasNext(SEPERATOR)) {
 				this.htmlNode.addNode(new Seperator_Node());
 				scan.nextLine();
@@ -112,12 +112,29 @@ public class HTML_Parser {
 		scan.close();
 	}
 
+	private AbstractNode parseBulletedList(String nextLine) {
+		Bulleted_List_Wrapper_Node bulletWrap = new Bulleted_List_Wrapper_Node();
+		Scanner scan = new Scanner(nextLine);
+		scan.useDelimiter("");
+		scan.next();
+		Bulleted_List_Node bulletNode = new Bulleted_List_Node();
+		StringBuilder str = new StringBuilder();
+		while(scan.hasNext()){
+			str.append(scan.next());
+		}
+		scan.close();
+		bulletNode.addNode(new TextNode(str.toString()));
+		bulletWrap.addNode(bulletNode);
+		return bulletWrap;
+	}
+
 	private AbstractNode parseParagraph(String nextLine) {
 		Paragraph_Node para = new Paragraph_Node();
 		Scanner scan = new Scanner(nextLine);
 		while(scan.hasNext()){
 			para.addNode(new TextNode(scan.next()));
 		}
+		scan.close();
 		return para;
 	}
 
