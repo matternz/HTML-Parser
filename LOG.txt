@@ -58,3 +58,6 @@ added more to parse method
 added pseudocode to parse method
 9:00pm
 block quote now works
+24/03/2018
+4:00pm
+updated parser seperator and paragraph tests now pass

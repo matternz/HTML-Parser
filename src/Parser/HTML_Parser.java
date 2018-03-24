@@ -41,43 +41,12 @@ public class HTML_Parser {
 	}
 
 	/**
-	 * reads through scanner and turns it into html code;
 	 * 
 	 * @param scan
 	 */
-	public void parse(Scanner scan) {
-		while (scan.hasNextLine()) {
-			String line = scan.nextLine();
-			Scanner sc = new Scanner(line);
-			while (sc.hasNext()) {
-				if (sc.hasNext(HEADING2)) {
-					this.htmlNode.addNode(parseHeader2(sc));
-				} else if (sc.hasNext(HEADING1)) {
-					this.htmlNode.addNode(parseHeader1(sc));
-				} else if (sc.hasNext(ITALIC)) {
-					// this.htmlNode.addNode(parseItalic(sc.next()));
-					Paragraph_Node para = new Paragraph_Node();
-					para.addNode(parseItalic(sc.next()));
-					this.htmlNode.addNode(para);
-				} else if (sc.hasNext(BOLD)) {
-					// this.htmlNode.addNode(parseBold(sc.next()));
-					Paragraph_Node para = new Paragraph_Node();
-					para.addNode(parseBold(sc.next()));
-					this.htmlNode.addNode(para);
-				} else {
-					Paragraph_Node para = new Paragraph_Node();
-					para.addNode(new TextNode(sc.next()));
-					this.htmlNode.addNode(para);
-				}
-			}
-		}
-		scan.close();
-	}
-
 	public void parseScanner(Scanner scan) {
 		while (scan.hasNextLine()) {
 			if (scan.hasNext(BLOCK_QUOTE)) {
-				// this.htmlNode.addNode(parseBlockQuote(new
 				this.htmlNode.addNode(parseBlockQuote(scan.nextLine()));
 			} else if (scan.hasNext(HEADING1)) {
 				this.htmlNode.addNode(parseHeader1(new Scanner(scan.nextLine())));
@@ -94,7 +63,7 @@ public class HTML_Parser {
 				}
 				scan.nextLine();
 			} else if (scan.hasNext(SEPERATOR)) {
-				// this.htmlNode.addNode(parseSeperator());
+				this.htmlNode.addNode(new Seperator_Node());
 				scan.nextLine();
 			} else if (scan.hasNext(BLOCK_CODE)) {
 				while (scan.hasNextLine()) {
@@ -129,9 +98,27 @@ public class HTML_Parser {
 				// check what the line starts with
 				// create new method to check for paragraphs italic and bold
 				// within?
-				scan.nextLine();
+				scan.useDelimiter("");
+				if(!scan.hasNext("\n")){
+					this.htmlNode.addNode(parseParagraph(scan.nextLine()));
+					
+				}
+				else{
+					scan.nextLine();
+				}
+				scan.reset();
 			}
 		}
+		scan.close();
+	}
+
+	private AbstractNode parseParagraph(String nextLine) {
+		Paragraph_Node para = new Paragraph_Node();
+		Scanner scan = new Scanner(nextLine);
+		while(scan.hasNext()){
+			para.addNode(new TextNode(scan.next()));
+		}
+		return para;
 	}
 
 	/**
