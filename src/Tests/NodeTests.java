@@ -163,7 +163,7 @@ public class NodeTests {
 	@Test
 	public void list_test_01() {
 		String text = "1. list";
-		assertEquals("<html><li>list</li></html>", createHTML(text));
+		assertEquals("<html><ol><li>list</li></ol></html>", createHTML(text));
 	}
 
 	/**

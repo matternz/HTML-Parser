@@ -22,7 +22,7 @@ public class HTML_Parser {
 	private static final Pattern BOLD = Pattern.compile("[*]{2}[a-zA-Z0-9]*[*]{2}");
 	private static final Pattern HEADING1 = Pattern.compile("[#]{1}");
 	private static final Pattern HEADING2 = Pattern.compile("[#]{2}");
-	private static final Pattern NUMBERED_LIST = Pattern.compile("[1-9]{1}[\\.]{1}[ ]{1}[a-zA-Z0-9]*");
+	private static final Pattern NUMBERED_LIST = Pattern.compile("[0-9]{1}[\\.]{1}");
 	private static final Pattern BULLETED_LIST = Pattern.compile("[*]");
 	private static final Pattern SEPERATOR = Pattern.compile("---");
 	private static final Pattern BLOCK_QUOTE = Pattern.compile(">");
@@ -54,10 +54,17 @@ public class HTML_Parser {
 			} else if (scan.hasNext(HEADING2)) {
 				this.htmlNode.addNode(parseHeader2(new Scanner(scan.nextLine())));
 			} else if (scan.hasNext(NUMBERED_LIST)) {
-				while (scan.hasNext(NUMBERED_LIST)) {
-					scan.nextLine();
+				Numbered_List_Wrapper_Node wrap = new Numbered_List_Wrapper_Node();
+				while(scan.hasNext()){
+					scan.next();
+					scan.useDelimiter("");
+					scan.next();
+					scan.reset();
+					Number_List_Token_Node token = new Number_List_Token_Node();
+					token.addNode(new TextNode(scan.nextLine()));
+					wrap.addNode(token);
 				}
-				scan.nextLine();
+				this.htmlNode.addNode(wrap);
 			} else if (scan.hasNext(BULLETED_LIST)) {
 				scan.next();
 				while (scan.hasNext()) {
