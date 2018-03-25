@@ -4,8 +4,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import Nodes.HTML_Node;
+import Tests.TestRunner;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -31,6 +34,7 @@ public class Parser {
 
 	/**
 	 * https://stackoverflow.com/questions/15754523/how-to-write-text-file-java
+	 * 
 	 * @param FileName
 	 */
 	public static void writeFile(String fileName, HTML_Node htmlNode) {
@@ -64,7 +68,7 @@ public class Parser {
 		}
 		HTML_Parser htmlParser = new HTML_Parser();
 		htmlParser.parseScanner(scan);
-		writeFile("out.html",htmlParser.getHtmlNode());
+		writeFile("out.html", htmlParser.getHtmlNode());
 
 	}
 
@@ -73,7 +77,7 @@ public class Parser {
 	 */
 	public static void selectFile() {
 		JFileChooser chooser = new JFileChooser();
-		chooser.setFileFilter(new FileNameExtensionFilter("markdown", ".md"));
+		chooser.setFileFilter(new FileNameExtensionFilter("markdown", "md"));
 		int res = chooser.showOpenDialog(null);
 		if (res != JFileChooser.APPROVE_OPTION) {
 			return;
@@ -86,7 +90,12 @@ public class Parser {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		selectFile();
+		List<String> argsList = Arrays.asList(args);
+		if (argsList.contains("--test")) {
+			TestRunner.run();
+		} else {
+			selectFile();
+		}
 	}
 
 }

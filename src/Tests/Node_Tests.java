@@ -14,7 +14,7 @@ import org.junit.Test;
 import Nodes.*;
 import Parser.HTML_Parser;
 
-public class NodeTests {
+public class Node_Tests {
 
 	/**
 	 * https://howtodoinjava.com/core-java/io/java-read-file-to-string-examples/
@@ -125,8 +125,8 @@ public class NodeTests {
 	 */
 	@Test
 	public void h1_header_complex_test() {
-		String text = "# header with *italics*";
-		assertEquals("<html><h1>header with <em>italics</em></h1></html>", createHTML(text));
+		String text = "# header with*italics*";
+		assertEquals("<html><h1>header with<em>italics</em></h1></html>", createHTML(text));
 	}
 
 	/**
@@ -134,8 +134,8 @@ public class NodeTests {
 	 */
 	@Test
 	public void h2_header_complex_test() {
-		String text = "## header with *italics*";
-		assertEquals("<html><h2>header with <em>italics</em></h2></html>", createHTML(text));
+		String text = "## header with*italics*";
+		assertEquals("<html><h2>header with<em>italics</em></h2></html>", createHTML(text));
 	}
 
 	/**
@@ -156,7 +156,6 @@ public class NodeTests {
 		assertEquals("<html><p>Paragraph1</p><p>Paragraph2</p></html>", createHTML(text));
 	}
 
-
 	/*
 	 * single line list
 	 */
@@ -174,58 +173,58 @@ public class NodeTests {
 		String text = "1. list\n1. list\n1. list";
 		assertEquals("<html><ol><li>list</li><li>list</li><li>list</li></ol></html>", createHTML(text));
 	}
-	
+
 	/**
 	 * single bulleted list
 	 */
 	@Test
-	public void bullet_test_01(){
+	public void bullet_test_01() {
 		String text = "* bullet";
 		assertEquals("<html><ul><li>bullet</li></ul></html>", createHTML(text));
 	}
-	
+
 	/**
 	 * multi line bulleted list with indent
 	 */
 	@Test
-	public void bullet_test_02(){
-		String text = "* bullet\n\t* bullet";
-		assertEquals("<html><ul><li>bullet<ul><li>bullet</li></ul></li></ul></html>", createHTML(text));
+	public void bullet_test_02() {
+		String text = "* bullet\n* bullet";
+		assertEquals("<html><ul><li>bullet</li><li>bullet</li></ul></html>", createHTML(text));
 	}
-	
+
 	/**
-	 * tests line seperator
+	 * tests line separator
 	 */
 	@Test
-	public void seperator_test(){
+	public void seperator_test() {
 		String text = "---";
 		assertEquals("<html><hr /></html>", createHTML(text));
 	}
-	
+
 	/**
 	 * single block quote
 	 */
 	@Test
-	public void block_test(){
+	public void block_test() {
 		String text = "> block";
 		assertEquals("<html><blockquote><p>block</p></blockquote></html>", createHTML(text));
 	}
-	
+
 	/**
 	 * tests inline code
 	 */
 	@Test
-	public void inline_code_test(){
+	public void inline_code_test() {
 		String text = "`inline`";
 		assertEquals("<html><code>inline</code></html>", createHTML(text));
 	}
-	
+
 	/**
 	 * tests block code
 	 */
 	@Test
-	public void block_code_test(){
+	public void block_code_test() {
 		String text = "```\nblock\n```";
-		assertEquals("<html><pre><code>block</code></pre></html>",createHTML(text));
+		assertEquals("<html><pre><code>block</code></pre></html>", createHTML(text));
 	}
 }

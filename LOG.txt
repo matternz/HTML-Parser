@@ -71,3 +71,7 @@ list now passes
 8:00pm
 https://stackoverflow.com/questions/15754523/how-to-write-text-file-java
 https://docs.oracle.com/javase/7/docs/api/javax/swing/JFileChooser.html
+https://stackoverflow.com/questions/15771949/how-do-i-make-jfilechooser-only-accept-txt
+fixed some duplications
+finished tests and tieded up code
+added test runner

@@ -6,31 +6,30 @@ import Nodes.*;
 
 public class HTML_Parser {
 
-	private HTML_Node htmlNode;
 	// https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
 	// https://docs.oracle.com/javase/7/docs/api/java/util/regex/Matcher.html
-	// Pattern.compile("\\s*^\\s*$\\s*", Pattern.MULTILINE);
-
-	// https://www.tutorialspoint.com/java/java_regular_expressions.htm
-	private static final Pattern ITALIC = Pattern.compile("[*]{1}?[a-zA-Z0-9]+[*]{1}");
 	// https://stackoverflow.com/questions/43932001/test-to-see-if-string-contains-2-letters-followed-by-7-numbers
+	// https://www.tutorialspoint.com/java/java_regular_expressions.htm
+	// https://www.tutorialspoint.com/java/java_regular_expressions.htm
+	// https://stackoverflow.com/questions/43932001/test-to-see-if-string-contains-2-letters-followed-by-7-numbers
+
+	private HTML_Node htmlNode;
+	private static final Pattern PARAGRAPH = Pattern.compile("\\s*^\\s*$\\s*", Pattern.MULTILINE);
+	private static final Pattern ITALIC = Pattern.compile("[*]{1}?[a-zA-Z0-9]+[*]{1}");
 	private static final Pattern BOLD = Pattern.compile("[*]{2}[a-zA-Z0-9]*[*]{2}");
-	private static final Pattern HEADING1 = Pattern.compile("[#]{1}");
-	private static final Pattern HEADING2 = Pattern.compile("[#]{2}");
+	private static final Pattern HEADING1 = Pattern.compile("[#]{1}[ ]*");
+	private static final Pattern HEADING2 = Pattern.compile("[#]{2}[ ]*");
 	private static final Pattern NUMBERED_LIST = Pattern.compile("[0-9]{1}[\\.]{1}");
-	private static final Pattern BULLETED_LIST = Pattern.compile("[*]");
+	private static final Pattern BULLETED_LIST = Pattern.compile("[*]{1}[a-zA-Z0-9]*");
 	private static final Pattern SEPERATOR = Pattern.compile("---");
 	private static final Pattern BLOCK_QUOTE = Pattern.compile(">");
 	private static final Pattern BLOCK_CODE = Pattern.compile("```");
 	private static final Pattern INLINE_CODE = Pattern.compile("`*([^`]*)`");
 
-	/**
-	 * 
-	 */
 	public HTML_Parser() {
 		this.htmlNode = new HTML_Node();
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -38,7 +37,7 @@ public class HTML_Parser {
 	public HTML_Node getHtmlNode() {
 		return htmlNode;
 	}
-	
+
 	/**
 	 * 
 	 * @param htmlNode
@@ -48,20 +47,28 @@ public class HTML_Parser {
 	}
 
 	/**
+	 * takes in a scanner and then builds a tree like structure
 	 * 
 	 * @param scan
 	 */
 	public void parseScanner(Scanner scan) {
 		while (scan.hasNextLine()) {
+			scan.reset();
 			if (scan.hasNext(BLOCK_QUOTE)) {
 				this.htmlNode.addNode(parseBlockQuote(scan.nextLine()));
 			} else if (scan.hasNext(HEADING1)) {
-				this.htmlNode.addNode(parseHeader1(new Scanner(scan.nextLine())));
+				String line = scan.nextLine();
+				if (line.length() != 0) {
+					this.htmlNode.addNode(parseHeader1(line));
+				}
 			} else if (scan.hasNext(HEADING2)) {
-				this.htmlNode.addNode(parseHeader2(new Scanner(scan.nextLine())));
+				String stliner = scan.nextLine();
+				if (stliner.length() != 0) {
+					this.htmlNode.addNode(parseHeader2(stliner));
+				}
 			} else if (scan.hasNext(NUMBERED_LIST)) {
 				Numbered_List_Wrapper_Node wrap = new Numbered_List_Wrapper_Node();
-				while(scan.hasNext()){
+				while (scan.hasNext(NUMBERED_LIST)) {
 					scan.next();
 					scan.useDelimiter("");
 					scan.next();
@@ -71,11 +78,26 @@ public class HTML_Parser {
 					wrap.addNode(token);
 				}
 				this.htmlNode.addNode(wrap);
-			} else if (scan.hasNext(BULLETED_LIST)) {
-				scan.next();
-				while (scan.hasNext()) {
-					this.htmlNode.addNode(parseBulletedList(scan.nextLine()));
+			} else if (scan.hasNext(ITALIC)) {
+				String line = scan.nextLine();
+				if (line.length() != 0) {
+					Paragraph_Node para = new Paragraph_Node();
+					para.addNode(parseItalic(line));
+					this.htmlNode.addNode(para);
 				}
+			} else if (scan.hasNext(BOLD)) {
+				String line = scan.nextLine();
+				if (line.length() != 0) {
+					Paragraph_Node para = new Paragraph_Node();
+					para.addNode(parseBold(line));
+					this.htmlNode.addNode(para);
+				}
+			} else if (scan.hasNext(BULLETED_LIST)) {
+				Bulleted_List_Wrapper_Node bullet = new Bulleted_List_Wrapper_Node();
+				while (scan.hasNext(BULLETED_LIST)) {
+					bullet.addNode(parseBulletedList(scan.nextLine()));
+				}
+				this.htmlNode.addNode(bullet);
 			} else if (scan.hasNext(SEPERATOR)) {
 				this.htmlNode.addNode(new Seperator_Node());
 				scan.nextLine();
@@ -83,40 +105,19 @@ public class HTML_Parser {
 				scan.nextLine();
 				Block_Code_Node block = new Block_Code_Node();
 				Inline_Node code = new Inline_Node();
-				while(scan.hasNextLine() && !scan.hasNext(BLOCK_CODE)){
+				while (scan.hasNextLine() && !scan.hasNext(BLOCK_CODE)) {
 					code.addNode(new TextNode(scan.nextLine()));
 				}
 				block.addNode(code);
 				this.htmlNode.addNode(block);
-				scan.nextLine();
+				if (scan.hasNextLine()) {
+					scan.nextLine();
+				}
 			} else if (scan.hasNext(INLINE_CODE)) {
 				this.htmlNode.addNode(parseInlineCode(scan.nextLine()));
-			} else if (scan.hasNext(ITALIC)) {
-				// which part of the line to you give to the other parsers?
-				//
-				// create new paragraph
-				// add italic node to it
-				// check if anything inside italic node
-				// add to html node
-				Paragraph_Node para = new Paragraph_Node();
-				para.addNode(parseItalic(scan.next()));
-				this.htmlNode.addNode(para);
-			} else if (scan.hasNext(BOLD)) {
-				// which part of the line to you give to the other parsers?
-				//
-				// create new paragraph
-				// add bold node to it
-				// check if anything inside bold node
-				// add to html node
-				Paragraph_Node para = new Paragraph_Node();
-				para.addNode(parseBold(scan.next()));
-				this.htmlNode.addNode(para);
 			} else {
-				// check what the line starts with
-				// create new method to check for paragraphs italic and bold
-				// within?
 				scan.useDelimiter("");
-				if (!scan.hasNext("\n")) {
+				if (!scan.hasNext("\n") && !scan.hasNext(PARAGRAPH)) {
 					this.htmlNode.addNode(parseParagraph(scan.nextLine()));
 
 				} else {
@@ -129,17 +130,18 @@ public class HTML_Parser {
 	}
 
 	/**
+	 * creates inline code <code></code>
 	 * 
 	 * @param nextLine
 	 * @return
 	 */
 	private AbstractNode parseInlineCode(String nextLine) {
 		StringBuilder str = new StringBuilder();
-		for(Character c : nextLine.toCharArray()){
-			if(c != '`'){
+		for (Character c : nextLine.toCharArray()) {
+			if (c != '`') {
 				str.append(c);
 			}
-			
+
 		}
 		TextNode text = new TextNode(str.toString());
 		Inline_Node inline = new Inline_Node();
@@ -148,15 +150,23 @@ public class HTML_Parser {
 	}
 
 	/**
+	 * creates bulleted list
+	 * <li></li>
 	 * 
 	 * @param nextLine
 	 * @return
 	 */
 	private AbstractNode parseBulletedList(String nextLine) {
-		Bulleted_List_Wrapper_Node bulletWrap = new Bulleted_List_Wrapper_Node();
+		// Bulleted_List_Wrapper_Node bulletWrap = new
+		// Bulleted_List_Wrapper_Node();
 		Scanner scan = new Scanner(nextLine);
+		if(scan.hasNext()){
+			scan.next();
+		}
 		scan.useDelimiter("");
-		scan.next();
+		if (scan.hasNext()) {
+			scan.next();
+		}
 		Bulleted_List_Node bulletNode = new Bulleted_List_Node();
 		StringBuilder str = new StringBuilder();
 		while (scan.hasNext()) {
@@ -164,11 +174,14 @@ public class HTML_Parser {
 		}
 		scan.close();
 		bulletNode.addNode(new TextNode(str.toString()));
-		bulletWrap.addNode(bulletNode);
-		return bulletWrap;
+		// bulletWrap.addNode(bulletNode);
+		return bulletNode;
 	}
 
 	/**
+	 * creates paragaph
+	 * <p>
+	 * </p>
 	 * 
 	 * @param nextLine
 	 * @return
@@ -184,6 +197,7 @@ public class HTML_Parser {
 	}
 
 	/**
+	 * creates <blockquote> </blockquote> node
 	 * 
 	 * @param line
 	 * @return
@@ -192,11 +206,15 @@ public class HTML_Parser {
 		Scanner scan = new Scanner(line);
 		scan.useDelimiter("");
 		for (int i = 0; i < 2; i++) {
-			scan.next();
+			if (scan.hasNext()) {
+				scan.next();
+			}
 		}
 		Block_Quote_Node block = new Block_Quote_Node();
 		Paragraph_Node para = new Paragraph_Node();
-		para.addNode(new TextNode(scan.nextLine()));
+		if (scan.hasNextLine()) {
+			para.addNode(new TextNode(scan.nextLine()));
+		}
 		block.addNode(para);
 		scan.close();
 		return block;
@@ -209,20 +227,23 @@ public class HTML_Parser {
 	 * @param scan
 	 * @return
 	 */
-	private AbstractNode parseHeader1(Scanner scan) {
-		scan.next();
-		scan.useDelimiter("");
-		scan.next();
-		scan.reset();
+	private AbstractNode parseHeader1(String line) {
+		Scanner scan = new Scanner(line);
+		if (scan.hasNext()) {
+			scan.next();
+			scan.useDelimiter("");
+			if (scan.hasNext()) {
+				scan.next();
+			}
+			scan.reset();
+		}
 		HeaderNode1 h1 = new HeaderNode1();
 		while (scan.hasNext()) {
 			if (scan.hasNext(ITALIC)) {
 				h1.addNode(parseItalic(scan.next()));
 			} else if (scan.hasNext(BOLD)) {
 				h1.addNode(parseBold(scan.next()));
-			}
-			// add check for startign with bold or italic
-			else {
+			} else {
 				scan.useDelimiter("");
 				h1.addNode(new TextNode(scan.next()));
 				scan.reset();
@@ -238,8 +259,16 @@ public class HTML_Parser {
 	 * @param scan
 	 * @return
 	 */
-	private AbstractNode parseHeader2(Scanner scan) {
-		scan.next();
+	private AbstractNode parseHeader2(String line) {
+		Scanner scan = new Scanner(line);
+		if (scan.hasNext()) {
+			scan.next();
+			scan.useDelimiter("");
+			if (scan.hasNext()) {
+				scan.next();
+			}
+			scan.reset();
+		}
 		HeaderNode2 h2 = new HeaderNode2();
 		while (scan.hasNext()) {
 			if (scan.hasNext(ITALIC)) {
@@ -249,9 +278,9 @@ public class HTML_Parser {
 			}
 			// add check for starting with bold or italic
 			else {
-				// scan.useDelimiter("");
+				scan.useDelimiter("");
 				h2.addNode(new TextNode(scan.next()));
-				// scan.reset();
+				scan.reset();
 
 			}
 		}
@@ -259,7 +288,7 @@ public class HTML_Parser {
 	}
 
 	/**
-	 * creates new italic node and returns it
+	 * creates new bold node <strong></strong> and returns it
 	 * 
 	 * @param str
 	 * @return
@@ -282,7 +311,7 @@ public class HTML_Parser {
 	}
 
 	/**
-	 * creates new italic node and returns it
+	 * creates new italic node <em></em> and returns it
 	 * 
 	 * @param str
 	 * @return

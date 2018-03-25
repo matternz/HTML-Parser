@@ -7,17 +7,6 @@ public class TextNode extends AbstractNode{
 	public TextNode(String text){
 		 this.text = text;
 	}
-	
-	@Override
-	public String getLatex() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String toString() {
-		return this.text;
-	}
 
 	@Override
 	public String getHTML() {
