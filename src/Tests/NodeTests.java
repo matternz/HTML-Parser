@@ -156,6 +156,7 @@ public class NodeTests {
 		assertEquals("<html><p>Paragraph1</p><p>Paragraph2</p></html>", createHTML(text));
 	}
 
+
 	/*
 	 * single line list
 	 */

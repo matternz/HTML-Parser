@@ -27,6 +27,7 @@ public class HTML_Parser {
 	private static final Pattern SEPERATOR = Pattern.compile("---");
 	private static final Pattern BLOCK_QUOTE = Pattern.compile(">");
 	private static final Pattern BLOCK_CODE = Pattern.compile("```");
+	private static final Pattern INLINE_CODE = Pattern.compile("`*([^`]*)`");
 
 	public HTML_Parser() {
 		this.htmlNode = new HTML_Node();
@@ -59,7 +60,7 @@ public class HTML_Parser {
 				scan.nextLine();
 			} else if (scan.hasNext(BULLETED_LIST)) {
 				scan.next();
-				while(scan.hasNext()){
+				while (scan.hasNext()) {
 					this.htmlNode.addNode(parseBulletedList(scan.nextLine()));
 				}
 			} else if (scan.hasNext(SEPERATOR)) {
@@ -70,27 +71,30 @@ public class HTML_Parser {
 					if (scan.hasNext(BLOCK_CODE)) {
 						// break out of hasNextLine loop
 						scan.nextLine();
-					}else{
+					} else {
 						scan.nextLine();
 					}
 				}
+			} else if (scan.hasNext(INLINE_CODE)) {
+				System.out.println("INLINE");
+				this.htmlNode.addNode(parseInlineCode(scan.nextLine()));
 			} else if (scan.hasNext(ITALIC)) {
-				//which part of the line to you give to the other parsers?
+				// which part of the line to you give to the other parsers?
 				//
-				//create new paragraph
-				//add italic node to it
-				//check if anything inside italic node
-				//add to html node
+				// create new paragraph
+				// add italic node to it
+				// check if anything inside italic node
+				// add to html node
 				Paragraph_Node para = new Paragraph_Node();
 				para.addNode(parseItalic(scan.next()));
 				this.htmlNode.addNode(para);
 			} else if (scan.hasNext(BOLD)) {
-				//which part of the line to you give to the other parsers?
+				// which part of the line to you give to the other parsers?
 				//
-				//create new paragraph
-				//add bold node to it
-				//check if anything inside bold node
-				//add to html node
+				// create new paragraph
+				// add bold node to it
+				// check if anything inside bold node
+				// add to html node
 				Paragraph_Node para = new Paragraph_Node();
 				para.addNode(parseBold(scan.next()));
 				this.htmlNode.addNode(para);
@@ -99,17 +103,30 @@ public class HTML_Parser {
 				// create new method to check for paragraphs italic and bold
 				// within?
 				scan.useDelimiter("");
-				if(!scan.hasNext("\n")){
+				if (!scan.hasNext("\n")) {
 					this.htmlNode.addNode(parseParagraph(scan.nextLine()));
-					
-				}
-				else{
+
+				} else {
 					scan.nextLine();
 				}
 				scan.reset();
 			}
 		}
 		scan.close();
+	}
+
+	private AbstractNode parseInlineCode(String nextLine) {
+		StringBuilder str = new StringBuilder();
+		for(Character c : nextLine.toCharArray()){
+			if(c != '`'){
+				str.append(c);
+			}
+			
+		}
+		TextNode text = new TextNode(str.toString());
+		Inline_Node inline = new Inline_Node();
+		inline.addNode(text);
+		return inline;
 	}
 
 	private AbstractNode parseBulletedList(String nextLine) {
@@ -119,7 +136,7 @@ public class HTML_Parser {
 		scan.next();
 		Bulleted_List_Node bulletNode = new Bulleted_List_Node();
 		StringBuilder str = new StringBuilder();
-		while(scan.hasNext()){
+		while (scan.hasNext()) {
 			str.append(scan.next());
 		}
 		scan.close();
@@ -131,7 +148,7 @@ public class HTML_Parser {
 	private AbstractNode parseParagraph(String nextLine) {
 		Paragraph_Node para = new Paragraph_Node();
 		Scanner scan = new Scanner(nextLine);
-		while(scan.hasNext()){
+		while (scan.hasNext()) {
 			para.addNode(new TextNode(scan.next()));
 		}
 		scan.close();
@@ -146,7 +163,7 @@ public class HTML_Parser {
 	private AbstractNode parseBlockQuote(String line) {
 		Scanner scan = new Scanner(line);
 		scan.useDelimiter("");
-		for(int i = 0; i < 2; i++){
+		for (int i = 0; i < 2; i++) {
 			scan.next();
 		}
 		Block_Quote_Node block = new Block_Quote_Node();

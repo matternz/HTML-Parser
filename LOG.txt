@@ -62,3 +62,7 @@ block quote now works
 4:00pm
 updated parser seperator and paragraph tests now pass
 updated parser bullet_test_01 now passes
+25/03/2018
+4:00pm
+https://stackoverflow.com/questions/30220642/how-can-i-get-a-string-between-2-asterisks
+inline code now passes
