@@ -66,3 +66,4 @@ updated parser bullet_test_01 now passes
 4:00pm
 https://stackoverflow.com/questions/30220642/how-can-i-get-a-string-between-2-asterisks
 inline code now passes
+block code now passes

@@ -67,16 +67,16 @@ public class HTML_Parser {
 				this.htmlNode.addNode(new Seperator_Node());
 				scan.nextLine();
 			} else if (scan.hasNext(BLOCK_CODE)) {
-				while (scan.hasNextLine()) {
-					if (scan.hasNext(BLOCK_CODE)) {
-						// break out of hasNextLine loop
-						scan.nextLine();
-					} else {
-						scan.nextLine();
-					}
+				scan.nextLine();
+				Block_Code_Node block = new Block_Code_Node();
+				Inline_Node code = new Inline_Node();
+				while(scan.hasNextLine() && !scan.hasNext(BLOCK_CODE)){
+					code.addNode(new TextNode(scan.nextLine()));
 				}
+				block.addNode(code);
+				this.htmlNode.addNode(block);
+				scan.nextLine();
 			} else if (scan.hasNext(INLINE_CODE)) {
-				System.out.println("INLINE");
 				this.htmlNode.addNode(parseInlineCode(scan.nextLine()));
 			} else if (scan.hasNext(ITALIC)) {
 				// which part of the line to you give to the other parsers?
