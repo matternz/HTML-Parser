@@ -7,13 +7,8 @@ import Nodes.*;
 public class HTML_Parser {
 
 	private HTML_Node htmlNode;
-
-	// change to private final
-
 	// https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
 	// https://docs.oracle.com/javase/7/docs/api/java/util/regex/Matcher.html
-
-	// private static final Pattern PARAGRAPH =
 	// Pattern.compile("\\s*^\\s*$\\s*", Pattern.MULTILINE);
 
 	// https://www.tutorialspoint.com/java/java_regular_expressions.htm
@@ -29,14 +24,25 @@ public class HTML_Parser {
 	private static final Pattern BLOCK_CODE = Pattern.compile("```");
 	private static final Pattern INLINE_CODE = Pattern.compile("`*([^`]*)`");
 
+	/**
+	 * 
+	 */
 	public HTML_Parser() {
 		this.htmlNode = new HTML_Node();
 	}
-
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public HTML_Node getHtmlNode() {
 		return htmlNode;
 	}
-
+	
+	/**
+	 * 
+	 * @param htmlNode
+	 */
 	public void setHtmlNode(HTML_Node htmlNode) {
 		this.htmlNode = htmlNode;
 	}
@@ -122,6 +128,11 @@ public class HTML_Parser {
 		scan.close();
 	}
 
+	/**
+	 * 
+	 * @param nextLine
+	 * @return
+	 */
 	private AbstractNode parseInlineCode(String nextLine) {
 		StringBuilder str = new StringBuilder();
 		for(Character c : nextLine.toCharArray()){
@@ -136,6 +147,11 @@ public class HTML_Parser {
 		return inline;
 	}
 
+	/**
+	 * 
+	 * @param nextLine
+	 * @return
+	 */
 	private AbstractNode parseBulletedList(String nextLine) {
 		Bulleted_List_Wrapper_Node bulletWrap = new Bulleted_List_Wrapper_Node();
 		Scanner scan = new Scanner(nextLine);
@@ -152,6 +168,11 @@ public class HTML_Parser {
 		return bulletWrap;
 	}
 
+	/**
+	 * 
+	 * @param nextLine
+	 * @return
+	 */
 	private AbstractNode parseParagraph(String nextLine) {
 		Paragraph_Node para = new Paragraph_Node();
 		Scanner scan = new Scanner(nextLine);
